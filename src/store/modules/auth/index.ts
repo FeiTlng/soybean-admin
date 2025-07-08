@@ -10,6 +10,7 @@ import { $t } from '@/locales';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
+import { consola } from 'consola';
 
 export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const route = useRoute();
@@ -95,14 +96,15 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    * @param userName User name
    * @param password Password
    * @param [redirect=true] Whether to redirect after login. Default is `true`
+   * @param type login type
    */
-  async function login(userName: string, password: string, redirect = true) {
+  async function login(userName: string, password: string, redirect = true, type: number) {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
-
+    const { data: token, error } = await fetchLogin(userName, password, type);
+    consola.log(token)
     if (!error) {
-      const pass = await loginByToken(loginToken);
+      const pass = await loginByToken(token);
 
       if (pass) {
         // Check if the tab needs to be cleared
