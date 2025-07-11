@@ -10,7 +10,7 @@ import { request } from '../request';
 export function fetchLogin(username: string, password: string, type: number) {
   return request<Api.Auth.LoginToken>({
     // url: '/auth/login',
-    url: '/v1/manager/user/login',
+    url: '/v1/uc/login',
     method: 'post',
     data: {
       username,
@@ -22,7 +22,7 @@ export function fetchLogin(username: string, password: string, type: number) {
 
 /** Get user info */
 export function fetchGetUserInfo() {
-  return request<Api.Auth.UserInfo>({ url: '/auth/getUserInfo' });
+  return request<Api.Auth.UserInfo>({ url: '/v1/uc/info' });
 }
 
 /**
