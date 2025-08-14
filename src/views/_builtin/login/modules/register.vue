@@ -3,6 +3,8 @@ import { computed, reactive } from 'vue';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useCaptcha } from '@/hooks/business/captcha';
+
+import { userRegistryByPwd } from '@/service/api/registry'
 import { $t } from '@/locales';
 
 defineOptions({
@@ -14,6 +16,7 @@ const { formRef, validate } = useNaiveForm();
 const { label, isCounting, loading, getCaptcha } = useCaptcha();
 
 interface FormModel {
+  nickName: string;
   phone: string;
   code: string;
   password: string;
@@ -21,6 +24,7 @@ interface FormModel {
 }
 
 const model: FormModel = reactive({
+  nickName: '',
   phone: '',
   code: '',
   password: '',
@@ -31,6 +35,7 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
   const { formRules, createConfirmPwdRule } = useFormRules();
 
   return {
+    nickName: formRules.userName,
     phone: formRules.phone,
     code: formRules.code,
     password: formRules.pwd,
@@ -41,12 +46,28 @@ const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
 async function handleSubmit() {
   await validate();
   // request to register
+  const registryInfo:Api.Registry.RegistryInfoPwd = {
+    type: 1,
+    nickName: model.nickName,
+    registryPhone: {
+      phone: model.phone,
+      code: model.code,
+    },
+    pwd: model.password,
+    agreePrivacy: true,
+  }
+  console.log(registryInfo)
+  await userRegistryByPwd( registryInfo )
   window.$message?.success($t('page.login.common.validateSuccess'));
+
 }
 </script>
 
 <template>
   <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
+    <NFormItem path="nickName">
+      <NInput v-model:value="model.nickName" :placeholder="$t('page.login.common.userNamePlaceholder')" />
+    </NFormItem>
     <NFormItem path="phone">
       <NInput v-model:value="model.phone" :placeholder="$t('page.login.common.phonePlaceholder')" />
     </NFormItem>

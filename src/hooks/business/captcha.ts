@@ -3,9 +3,11 @@ import { useCountDown, useLoading } from '@sa/hooks';
 import { REG_PHONE } from '@/constants/reg';
 import { $t } from '@/locales';
 
+import { sendRegistrySmsCode } from '@/service/api/registry'
+
 export function useCaptcha() {
   const { loading, startLoading, endLoading } = useLoading();
-  const { count, start, stop, isCounting } = useCountDown(10);
+  const { count, start, stop, isCounting } = useCountDown(3);
 
   const label = computed(() => {
     let text = $t('page.login.codeLogin.getCode');
@@ -32,7 +34,6 @@ export function useCaptcha() {
 
     if (!REG_PHONE.test(phone)) {
       window.$message?.error?.($t('form.phone.invalid'));
-
       return false;
     }
 
@@ -51,6 +52,8 @@ export function useCaptcha() {
     // request
     await new Promise(resolve => {
       setTimeout(resolve, 500);
+
+      sendRegistrySmsCode(phone);
     });
 
     window.$message?.success?.($t('page.login.codeLogin.sendCodeSuccess'));

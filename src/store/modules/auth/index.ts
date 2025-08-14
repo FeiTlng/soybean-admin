@@ -23,9 +23,13 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const token = ref(getToken());
 
   const userInfo: Api.Auth.UserInfo = reactive({
-    userId: '',
+    uid: '',
     userName: '',
-    roles: [],
+    gender: '',
+    roles: [{
+      rid: '',
+      name: ''
+    }],
     buttons: []
   });
 
@@ -33,7 +37,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
-    return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
+    // return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
+    return VITE_AUTH_ROUTE_MODE === 'static'
   });
 
   /** Is login */
@@ -57,12 +62,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   /** Record the user ID of the previous login session Used to compare with the current user ID on next login */
   function recordUserId() {
-    if (!userInfo.userId) {
+    if (!userInfo.uid) {
       return;
     }
 
     // Store current user ID locally for next login comparison
-    localStg.set('lastLoginUserId', userInfo.userId);
+    localStg.set('lastLoginUserId', userInfo.uid);
   }
 
   /**
@@ -71,14 +76,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    * @returns {boolean} Whether to clear all tabs
    */
   function checkTabClear(): boolean {
-    if (!userInfo.userId) {
+    if (!userInfo.uid) {
       return false;
     }
 
     const lastLoginUserId = localStg.get('lastLoginUserId');
 
     // Clear all tabs if current user is different from previous user
-    if (!lastLoginUserId || lastLoginUserId !== userInfo.userId) {
+    if (!lastLoginUserId || lastLoginUserId !== userInfo.uid) {
       localStg.remove('globalTabs');
       tabStore.clearTabs();
 
@@ -149,11 +154,12 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   async function getUserInfo() {
     const { data: info, error } = await fetchGetUserInfo();
+    console.log(info)
 
     if (!error) {
       // update store
       Object.assign(userInfo, info);
-
+      localStg.set('userInfo', userInfo)
       return true;
     }
 

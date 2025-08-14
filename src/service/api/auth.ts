@@ -1,19 +1,20 @@
 import { request } from '../request';
+import any from 'async-validator/dist-types/validator/any';
 
 /**
  * Login
  *
- * @param username User name
+ * @param phone User name
  * @param password Password
  * @param type login type
  */
-export function fetchLogin(username: string, password: string, type: number) {
+export function fetchLogin(phone: string, password: string, type: number) {
   return request<Api.Auth.LoginToken>({
     // url: '/auth/login',
-    url: '/v1/uc/login',
+    url: '/v1/mg/uc/login',
     method: 'post',
     data: {
-      username,
+      phone,
       password,
       type
     }

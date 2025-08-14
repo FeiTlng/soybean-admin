@@ -39,5 +39,7 @@ declare namespace StorageType {
     };
     /** The last login user id */
     lastLoginUserId: string;
+
+    userInfo: Api.Auth.UserInfo
   }
 }

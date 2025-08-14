@@ -6,6 +6,11 @@ import { $t } from '@/locales';
 
 export function useFormRules() {
   const patternRules = {
+    acl: {
+      pattern: '',
+      message: $t('form.acl.invalid'),
+      trigger: 'change'
+    },
     userName: {
       pattern: REG_USER_NAME,
       message: $t('form.userName.invalid'),
