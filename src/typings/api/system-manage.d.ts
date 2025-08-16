@@ -9,12 +9,15 @@ declare namespace Api {
 
     /** role */
     type Role = Common.CommonRecord<{
+      id: string;
       /** role name */
       roleName: string;
       /** role code */
       roleCode: string;
       /** role description */
       roleDesc: string;
+      createAt: string;
+      modifyAt: string;
     }>;
 
     /** role search params */
