@@ -27,9 +27,9 @@ declare namespace Api {
      * enable status
      *
      * - "1": enabled
-     * - "2": disabled
+     * - "0": disabled
      */
-    type EnableStatus = '1' | '2';
+    type EnableStatus = '1' | '0';
 
     /** common record */
     type CommonRecord<T = any> = {

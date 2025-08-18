@@ -1,11 +1,34 @@
 import { request } from '../request';
 
+export function addNewRole(params?: any) {
+  return request<any>({
+    method: 'POST',
+    url: '/v1/role/add',
+    data: {
+      params
+    }
+  });
+}
+
+export function modifyRole(params: Api.SystemManage.Role) {
+  console.log(params)
+  return request({
+    method: 'POST',
+    url: '/v1/role/modify',
+    data: {
+      id: params.id,
+      name: params.roleName,
+      status: params.status
+    }
+  });
+}
+
 /** get role list */
 export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.RoleList>({
     url: '/v1/role/list',
     method: 'get',
-    params
+    params,
   });
 }
 

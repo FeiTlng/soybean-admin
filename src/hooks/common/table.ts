@@ -53,9 +53,6 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       const recordsWithIndex = res.data.data.map((item, index) => {
         return {
           ...item,
-          roleCode: index+"",
-          roleDesc: index+"",
-          status: "1",
           index: (Number(current) - 1) * pageSize + index + 1
         };
       });
@@ -130,7 +127,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     pageSize: 10,
     showSizePicker: true,
     itemCount: 0,
-    pageSizes: [2, 10, 15, 20, 25, 30],
+    pageSizes: [5, 10, 15, 20, 25, 30],
     onUpdatePage: async (page: number) => {
       pagination.page = page;
 
@@ -240,6 +237,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     operateType.value = 'edit';
     const findItem = data.value.find(item => item.id === id) || null;
     editingData.value = jsonClone(findItem);
+    console.log("editingData.value", editingData.value)
 
     openDrawer();
   }

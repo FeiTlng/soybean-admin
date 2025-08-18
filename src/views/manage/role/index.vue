@@ -28,8 +28,7 @@ const {
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null,
-    roleName: null,
-    roleCode: null
+    roleName: null
   },
   columns: () => [
     {
@@ -50,17 +49,6 @@ const {
       minWidth: 120
     },
     {
-      key: 'roleCode',
-      title: $t('page.manage.role.roleCode'),
-      align: 'center',
-      minWidth: 120
-    },
-    {
-      key: 'roleDesc',
-      title: $t('page.manage.role.roleDesc'),
-      minWidth: 120
-    },
-    {
       key: 'status',
       title: $t('page.manage.role.roleStatus'),
       align: 'center',
@@ -72,7 +60,7 @@ const {
 
         const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
           1: 'success',
-          2: 'warning'
+          0: 'warning'
         };
 
         const label = $t(enableStatusRecord[row.status]);
@@ -132,7 +120,8 @@ function handleDelete(id: number) {
   onDeleted();
 }
 
-function edit(id: number) {
+function edit(id: string) {
+  console.log("edit id", id)
   handleEdit(id);
 }
 </script>
