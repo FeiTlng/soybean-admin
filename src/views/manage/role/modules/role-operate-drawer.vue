@@ -6,7 +6,7 @@ import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
-import { modifyRole } from '@/service/api';
+import { addNewRole, modifyRole } from '@/service/api';
 
 defineOptions({
   name: 'RoleOperateDrawer'
@@ -80,15 +80,26 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  await modifyRole({
-    id: props.rowData?.id,
-    roleName: model.value.roleName,
-    status: model.value.status
-  });
-
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
+  if(props.operateType === 'edit' && props.rowData) {
+    await modifyRole({
+      id: props.rowData?.id,
+      roleName: model.value.roleName,
+      status: model.value.status
+    }).then(()=>{
+      window.$message?.success($t('common.updateSuccess'));
+    });
+  } else if (props.operateType === 'add') {
+    await addNewRole( {
+      roleName: model.value.roleName,
+      status: model.value.status
+    } ).then(()=>{
+      window.$message?.success($t('common.addSuccess'));
+    });
+  } else {
+    return;
+  }
   emit('submitted');
+  closeDrawer();
 }
 
 watch(visible, () => {
