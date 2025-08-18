@@ -8,12 +8,12 @@ export function addNewRole(params?: any) {
   });
 }
 
-export function delRoleById(id?: any) {
+export function delRoleById(id?: any[]) {
   return request({
     method: 'POST',
     url: '/v1/role/del',
     data: {
-      id: id
+      ids: id
     }
   })
 }

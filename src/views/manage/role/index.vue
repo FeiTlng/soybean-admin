@@ -102,20 +102,25 @@ const {
   handleEdit,
   checkedRowKeys,
   onBatchDeleted,
-  onDeleted
-  // closeDrawer
+  onDeleted,
+  closeDrawer
 } = useTableOperate(data, getData);
 
 async function handleBatchDelete() {
   // request
-  console.log(checkedRowKeys.value);
-
-  onBatchDeleted();
+  await delRoleById(checkedRowKeys.value).then(res => {
+    if(res.response.status===200) {
+      onBatchDeleted();
+    }
+  })
 }
 
 async function handleDelete(id: number) {
-  await delRoleById(id);
-  onDeleted();
+  await delRoleById([id]).then(res=>{
+    if (res.response.status===200) {
+      onDeleted();
+    }
+  });
 }
 
 function edit(id: any) {
