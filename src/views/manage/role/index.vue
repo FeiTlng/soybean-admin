@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { enableStatusRecord } from '@/constants/business';
-import { fetchGetRoleList } from '@/service/api';
+import { delRoleById, fetchGetRoleList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -113,15 +113,12 @@ async function handleBatchDelete() {
   onBatchDeleted();
 }
 
-function handleDelete(id: number) {
-  // request
-  console.log(id);
-
+async function handleDelete(id: number) {
+  await delRoleById(id);
   onDeleted();
 }
 
-function edit(id: string) {
-  console.log("edit id", id)
+function edit(id: any) {
   handleEdit(id);
 }
 </script>

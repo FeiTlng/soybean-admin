@@ -10,8 +10,17 @@ export function addNewRole(params?: any) {
   });
 }
 
+export function delRoleById(id?: any) {
+  return request({
+    method: 'POST',
+    url: '/v1/role/del',
+    data: {
+      id: id
+    }
+  })
+}
+
 export function modifyRole(params: Api.SystemManage.Role) {
-  console.log(params)
   return request({
     method: 'POST',
     url: '/v1/role/modify',
