@@ -198,7 +198,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       addAuthRoutes(staticAuthRoutes);
     } else {
       // todo
-      const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles);
+      const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles.map(t=>{return t.name}));
 
       addAuthRoutes(filteredAuthRoutes);
     }
