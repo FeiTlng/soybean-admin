@@ -673,6 +673,10 @@ declare namespace App {
             userEmail: string;
             userStatus: string;
             userRole: string;
+            userLevel: string;
+            userPoints: string;
+            userType: string;
+            registryTime: string
             form: {
               userName: string;
               userGender: string;
@@ -688,6 +692,15 @@ declare namespace App {
               male: string;
               female: string;
             };
+            status: {
+              enable: string;
+              disable: string;
+              invalidPhone: string;
+            };
+            type: {
+              normal: string;
+              manager: string;
+            }
           };
           menu: {
             home: string;

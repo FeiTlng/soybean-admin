@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { enableStatusOptions, userGenderOptions, userStatusOptions } from '@/constants/business';
 import { fetchGetAllRoles } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -41,7 +41,7 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.User,
-  'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'userRoles' | 'status'
+  'userName' | 'userGender' | 'userPhone' | 'userRoles' | 'status' | 'type'
 >;
 
 const model = ref(createDefaultModel());
@@ -50,11 +50,12 @@ function createDefaultModel(): Model {
   return {
     userName: '',
     userGender: null,
-    nickName: '',
+    // nickName: '',
     userPhone: '',
-    userEmail: '',
+    // userEmail: '',
     userRoles: [],
-    status: null
+    status: '1',
+    type: 2
   };
 }
 
@@ -130,21 +131,15 @@ watch(visible, () => {
             <NRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.nickName')" path="nickName">
-          <NInput v-model:value="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />
-        </NFormItem>
         <NFormItem :label="$t('page.manage.user.userPhone')" path="userPhone">
           <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userEmail')" path="email">
-          <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
-        </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
+        <NFormItem :label="$t('page.manage.user.userStatus')" path="userStatus">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+            <NRadio v-for="item in userStatusOptions" :key="item.value" :value="'1'" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userRole')" path="roles">
+        <NFormItem v-if="model.type===2" :label="$t('page.manage.user.userRole')" path="roles">
           <NSelect
             v-model:value="model.userRoles"
             multiple

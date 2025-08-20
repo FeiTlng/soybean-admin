@@ -492,6 +492,10 @@ const local: App.I18n.Schema = {
         userPhone: 'Phone Number',
         userEmail: 'Email',
         userStatus: 'User Status',
+        userLevel: 'Members Level',
+        userPoints: 'Members Points',
+        registryTime: 'Registry Time',
+        userType:'User Type',
         userRole: 'User Role',
         form: {
           userName: 'Please enter user name',
@@ -507,6 +511,15 @@ const local: App.I18n.Schema = {
         gender: {
           male: 'Male',
           female: 'Female'
+        },
+        status: {
+          enable: 'Normal',
+          disable: 'Lock',
+          invalidPhone: 'Invalid Phone Number',
+        },
+        type: {
+          normal: 'Normal User',
+          manager: 'Operational users'
         }
       },
       menu: {

@@ -492,6 +492,10 @@ const local: App.I18n.Schema = {
         userPhone: '手机号',
         userEmail: '邮箱',
         userStatus: '用户状态',
+        userLevel: '会员等级',
+        userPoints: '积分',
+        registryTime: '注册时间',
+        userType: '用户类型',
         userRole: '用户角色',
         form: {
           userName: '请输入用户名',
@@ -507,6 +511,15 @@ const local: App.I18n.Schema = {
         gender: {
           male: '男',
           female: '女'
+        },
+        status: {
+          enable: '正常',
+          disable: '锁定',
+          invalidPhone: '手机号未验证'
+        },
+        type: {
+          normal: '普通用户',
+          manager: '运营用户'
         }
       },
       menu: {

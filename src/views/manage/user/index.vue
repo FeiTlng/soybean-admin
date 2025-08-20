@@ -1,12 +1,19 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
+import {
+  enableStatusRecord,
+  userGenderRecord,
+  userStatus,
+  userStatusOptions,
+  userTypeRecord
+} from '@/constants/business';
 import { fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import UserOperateDrawer from './modules/user-operate-drawer.vue';
 import UserSearch from './modules/user-search.vue';
+import { formatUserRegistryTime } from '@/utils/common';
 
 const appStore = useAppStore();
 
@@ -31,9 +38,7 @@ const {
     status: null,
     userName: null,
     userGender: null,
-    nickName: null,
     userPhone: null,
-    userEmail: null
   },
   columns: () => [
     {
@@ -42,80 +47,10 @@ const {
       width: 48
     },
     {
-      key: 'index',
-      title: $t('common.index'),
-      align: 'center',
-      width: 64
-    },
-    {
-      key: 'userName',
-      title: $t('page.manage.user.userName'),
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'userGender',
-      title: $t('page.manage.user.userGender'),
-      align: 'center',
-      width: 100,
-      render: row => {
-        if (row.userGender === null) {
-          return null;
-        }
-
-        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
-          1: 'primary',
-          2: 'error'
-        };
-
-        const label = $t(userGenderRecord[row.userGender]);
-
-        return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
-      }
-    },
-    {
-      key: 'nickName',
-      title: $t('page.manage.user.nickName'),
-      align: 'center',
-      minWidth: 100
-    },
-    {
-      key: 'userPhone',
-      title: $t('page.manage.user.userPhone'),
-      align: 'center',
-      width: 120
-    },
-    {
-      key: 'userEmail',
-      title: $t('page.manage.user.userEmail'),
-      align: 'center',
-      minWidth: 200
-    },
-    {
-      key: 'status',
-      title: $t('page.manage.user.userStatus'),
-      align: 'center',
-      width: 100,
-      render: row => {
-        if (row.status === null) {
-          return null;
-        }
-
-        const tagMap: Record<Api.Common.EnableStatus, NaiveUI.ThemeColor> = {
-          1: 'success',
-          2: 'warning'
-        };
-
-        const label = $t(enableStatusRecord[row.status]);
-
-        return <NTag type={tagMap[row.status]}>{label}</NTag>;
-      }
-    },
-    {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 100,
       render: row => (
         <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -133,6 +68,105 @@ const {
           </NPopconfirm>
         </div>
       )
+    },
+    {
+      key: 'index',
+      title: $t('common.index'),
+      align: 'center',
+      width: 48
+    },
+    {
+      key: 'userName',
+      title: $t('page.manage.user.userName'),
+      align: 'center',
+      width: 100
+    },
+    {
+      key: 'type',
+      title: $t('page.manage.user.userType'),
+      align: 'center',
+      width: 100,
+      render: row => {
+        const tagMap: Record<Api.SystemManage.UserType, NaiveUI.ThemeColor> = {
+          1: 'primary',
+          2: 'error'
+        };
+        const label = $t(userTypeRecord[row.type]);
+        if (row.type === 1) {
+          // const label = row.type? $t(userTypeRecord[row.type]) : '未知';
+          return <NTag type={tagMap[row.type]}>{label}</NTag>;
+        } else if (row.type === 2) {
+          return <NTag type={tagMap[row.type]}>{label}</NTag>;
+        } else {
+
+        }
+      }
+    },
+    {
+      key: 'userGender',
+      title: $t('page.manage.user.userGender'),
+      align: 'center',
+      width: 64,
+      render: row => {
+        const tagMap: Record<Api.SystemManage.UserGender, NaiveUI.ThemeColor> = {
+          1: 'primary',
+          2: 'error'
+        };
+        if (row.userGender !== '1' && row.userGender!=='2') {
+          return <NTag type="default">未知</NTag>;
+        } else {
+          const label = row.userGender? $t(userGenderRecord[row.userGender]) : '未知';
+          return <NTag type={tagMap[row.userGender]}>{label}</NTag>;
+        }
+      }
+    },
+    {
+      key: 'userPhone',
+      title: $t('page.manage.user.userPhone'),
+      align: 'center',
+      width: 100
+    },
+    {
+      key: 'level',
+      title: $t('page.manage.user.userLevel'),
+      align: 'center',
+      width: 100
+    },
+    {
+      key: 'points',
+      title: $t('page.manage.user.userPoints'),
+      align: 'center',
+      width: 100
+    },
+    {
+      key: 'status',
+      title: $t('page.manage.user.userStatus'),
+      align: 'center',
+      width: 80,
+      render: row => {
+        if (row.status === null) {
+          return null;
+        }
+
+        const tagMap: Record<Api.SystemManage.UserStatus, NaiveUI.ThemeColor> = {
+          0: 'success',
+          1: 'warning',
+          2: 'error'
+        };
+
+        const label = $t(userStatus[row.status]);
+
+        return <NTag type={tagMap[row.status]}>{label}</NTag>;
+      }
+    },
+    {
+      key: 'createTime',
+      title: $t('page.manage.user.registryTime'),
+      align: 'center',
+      maxWidth: 200,
+      render: row => {
+        return formatUserRegistryTime(row.createTime);
+      }
     }
   ]
 });
