@@ -275,6 +275,17 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'manage_permission',
+        path: '/manage/permission',
+        component: 'view.manage_permission',
+        meta: {
+          title: 'manage_permission',
+          i18nKey: 'route.manage_permission',
+          order: 4,
+          icon: 'icon-park-outline:permissions'
+        }
+      },
+      {
         name: 'manage_role',
         path: '/manage/role',
         component: 'view.manage_role',
@@ -283,7 +294,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.manage_role',
           icon: 'carbon:user-role',
           order: 2,
-          roles: ['R_SUPER']
+          roles: ['']
         }
       },
       {
@@ -295,7 +306,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.manage_user',
           icon: 'ic:round-manage-accounts',
           order: 1,
-          roles: ['R_ADMIN']
+          roles: ['']
         }
       },
       {
@@ -307,7 +318,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'manage_user-detail',
           i18nKey: 'route.manage_user-detail',
           hideInMenu: true,
-          roles: ['R_ADMIN'],
+          roles: [''],
           activeMenu: 'manage_user'
         }
       }

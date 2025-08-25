@@ -206,6 +206,7 @@ const local: App.I18n.Schema = {
     manage_user: 'User Manage',
     'manage_user-detail': 'User Detail',
     manage_role: 'Role Manage',
+    manage_permission: 'Permission Manage',
     manage_menu: 'Menu Manage',
     'multi-menu': 'Multi Menu',
     'multi-menu_first': 'Menu One',
