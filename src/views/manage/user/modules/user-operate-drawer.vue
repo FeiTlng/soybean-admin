@@ -59,11 +59,12 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'userName' | 'status'>;
+type RuleKey = Extract<keyof Model, 'userName' | 'status' | 'userPhone'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   userName: defaultRequiredRule,
-  status: defaultRequiredRule
+  status: defaultRequiredRule,
+  userPhone: defaultRequiredRule
 };
 
 /** the enabled role options */
@@ -75,7 +76,7 @@ async function getRoleOptions() {
   if (!error) {
     const options = data.map(item => ({
       label: item.roleName,
-      value: item.roleCode
+      value: item.id
     }));
 
     // the mock data does not have the roleCode, so fill it
@@ -126,17 +127,17 @@ watch(visible, () => {
         <NFormItem :label="$t('page.manage.user.userName')" path="userName">
           <NInput v-model:value="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
         </NFormItem>
+        <NFormItem :label="$t('page.manage.user.userPhone')" path="userPhone">
+          <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
+        </NFormItem>
         <NFormItem :label="$t('page.manage.user.userGender')" path="userGender">
           <NRadioGroup v-model:value="model.userGender">
             <NRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem :label="$t('page.manage.user.userPhone')" path="userPhone">
-          <NInput v-model:value="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
-        </NFormItem>
         <NFormItem :label="$t('page.manage.user.userStatus')" path="userStatus">
           <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in userStatusOptions" :key="item.value" :value="'1'" :label="$t(item.label)" />
+            <NRadio v-for="item in userStatusOptions" :key="item.value" :value="Number(item.value)" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
         <NFormItem v-if="model.type===2" :label="$t('page.manage.user.userRole')" path="roles">
