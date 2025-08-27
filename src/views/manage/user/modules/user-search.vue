@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { enableStatusOptions, userGenderOptions } from '@/constants/business';
+import { userGenderOptions, userStatusOptions } from '@/constants/business';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { translateOptions } from '@/utils/common';
 import { $t } from '@/locales';
@@ -82,7 +82,7 @@ async function search() {
               <NSelect
                 v-model:value="model.status"
                 :placeholder="$t('page.manage.user.form.userStatus')"
-                :options="translateOptions(enableStatusOptions)"
+                :options="translateOptions(userStatusOptions)"
                 clearable
               />
             </NFormItemGi>
