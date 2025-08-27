@@ -7,7 +7,7 @@ import {
   userStatusOptions,
   userTypeRecord
 } from '@/constants/business';
-import { fetchGetUserList } from '@/service/api';
+import { batchDelUserByIds, fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -150,8 +150,8 @@ const {
 
         const tagMap: Record<Api.SystemManage.UserStatus, NaiveUI.ThemeColor> = {
           0: 'success',
-          1: 'warning',
-          2: 'error'
+          2: 'warning',
+          1: 'error'
         };
 
         const label = $t(userStatus[row.status]);
@@ -184,17 +184,19 @@ const {
 } = useTableOperate(data, getData);
 
 async function handleBatchDelete() {
-  // request
-  console.log(checkedRowKeys.value);
-
-  onBatchDeleted();
+  await batchDelUserByIds(checkedRowKeys.value).then(res=>{
+    if (res.response.status===200) {
+      onBatchDeleted();
+    }
+  });
 }
 
-function handleDelete(id: number) {
-  // request
-  console.log(id);
-
-  onDeleted();
+async function handleDelete(id: number) {
+  await batchDelUserByIds([id]).then(res=>{
+    if (res.response.status===200) {
+      onDeleted();
+    }
+  });
 }
 
 function edit(id: number) {

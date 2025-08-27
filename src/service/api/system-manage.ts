@@ -60,6 +60,43 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   });
 }
 
+export function addNewUserAccount(param?: Pick<Api.SystemManage.User, 'userName' | 'userPhone' | 'userGender'>) {
+  return request({
+    method: 'POST',
+    url: '/v1/mg/uc/addNew',
+    data: {
+      userName: param?.userName,
+      userPhone: param?.userPhone,
+      userGender: param?.userGender
+    }
+  });
+}
+
+export function modifyUserInfo(param?: Pick<Api.SystemManage.User, 'id' | 'userName' | 'userPhone' | 'userGender' | 'status'>) {
+  return request({
+    method: 'POST',
+    url: '/v1/mg/uc/modifyUserInfo',
+    data: {
+      id: param?.id,
+      userName: param?.userName,
+      userGender: param?.userGender,
+      userPhone: param?.userPhone,
+      status: param?.status
+    }
+  });
+}
+
+export function batchDelUserByIds(id?: any[]) {
+  return request({
+    method: 'POST',
+    url: '/v1/mg/uc/batchCloseAccount',
+    data: {
+      ids: id
+    }
+  })
+}
+
+
 /** get menu list */
 export function fetchGetMenuList() {
   return request<Api.SystemManage.MenuList>({

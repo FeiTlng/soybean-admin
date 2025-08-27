@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { enableStatusOptions, userGenderOptions, userStatusOptions } from '@/constants/business';
-import { fetchGetAllRoles } from '@/service/api';
+import { userGenderOptions, userStatusOptions } from '@/constants/business';
+import { addNewUserAccount, fetchGetAllRoles, modifyUserInfo } from '@/service/api';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -105,10 +105,33 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  // request
-  window.$message?.success($t('common.updateSuccess'));
-  closeDrawer();
+  if(props.operateType === 'edit' && props.rowData) {
+    await modifyUserInfo({
+      id: props.rowData?.id,
+      userName: model.value.userName,
+      userPhone: model.value.userPhone,
+      userGender: model.value.userGender,
+      status: model.value.status
+    }).then(res=>{
+      if (res.response.status===200) {
+        window.$message?.success($t('common.updateSuccess'));
+      }
+    });
+  } else if (props.operateType === 'add') {
+    await addNewUserAccount( {
+      userName: model.value.userName,
+      userPhone: model.value.userPhone,
+      userGender: model.value.userGender
+    } ).then(res=>{
+      if (res.response.status===200) {
+        window.$message?.success($t('common.addSuccess'));
+      }
+    });
+  } else {
+    return;
+  }
   emit('submitted');
+  closeDrawer();
 }
 
 watch(visible, () => {
