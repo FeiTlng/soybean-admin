@@ -132,7 +132,6 @@ const {
       key: 'userPhone',
       title: $t('page.manage.user.userPhone'),
       align: 'center',
-      width: 100
     },
     {
       key: 'level',
