@@ -209,7 +209,6 @@ async function handleDelete(id: number) {
 }
 
 async function handleUserTypeChange(id: any, type: number) {
-  console.log("type", type)
   await changeUserType(id, type).then(res=>{
     if (res.response.status===200) {
       onSetUp();
