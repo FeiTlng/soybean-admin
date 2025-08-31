@@ -330,6 +330,8 @@ declare namespace App {
         logout: string;
         logoutConfirm: string;
         lookForward: string;
+        setUpSuccess: string;
+        confirmModify: string;
         modify: string;
         modifySuccess: string;
         noData: string;
@@ -676,7 +678,9 @@ declare namespace App {
             userLevel: string;
             userPoints: string;
             userType: string;
-            registryTime: string
+            registryTime: string;
+            setUpManage: string;
+            setUpNormal: string;
             form: {
               userName: string;
               userGender: string;

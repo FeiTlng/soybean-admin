@@ -30,6 +30,8 @@ const local: App.I18n.Schema = {
     logout: 'Logout',
     logoutConfirm: 'Are you sure you want to log out?',
     lookForward: 'Coming soon',
+    setUpSuccess: 'Set up success',
+    confirmModify: 'Are you sure you want to modify?',
     modify: 'Modify',
     modifySuccess: 'Modify Success',
     noData: 'No Data',
@@ -497,6 +499,8 @@ const local: App.I18n.Schema = {
         userPoints: 'Members Points',
         registryTime: 'Registry Time',
         userType:'User Type',
+        setUpManage: 'Setup manage user',
+        setUpNormal: 'Setup normal user',
         userRole: 'User Role',
         form: {
           userName: 'Please enter user name',

@@ -1,13 +1,11 @@
 <script setup lang="tsx">
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import {
-  enableStatusRecord,
   userGenderRecord,
   userStatus,
-  userStatusOptions,
-  userTypeRecord
+  userTypeRecord, userTypeSetUpBut
 } from '@/constants/business';
-import { batchDelUserByIds, fetchGetUserList } from '@/service/api';
+import { batchDelUserByIds, changeUserType, fetchGetUserList } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -50,9 +48,14 @@ const {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 100,
-      render: row => (
-        <div class="flex-center gap-8px">
+      width: 'auto',
+      render: row => {
+        const setUpLabel = $t(userTypeSetUpBut[row.type]);
+        const tagMap: Record<Api.SystemManage.UserType, NaiveUI.ThemeColor> = {
+          2: 'primary',
+          1: 'error'
+        };
+        return <div class="flex-center gap-8px">
           <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
             {$t('common.edit')}
           </NButton>
@@ -66,8 +69,20 @@ const {
               )
             }}
           </NPopconfirm>
-        </div>
-      )
+          <NPopconfirm onPositiveClick={() => {
+            handleUserTypeChange(row.id, row.type===2?1:2)
+          }}>
+            {{
+              default: () => $t('common.confirmModify'),
+              trigger: () => (
+                <NButton type={tagMap[row.type]} ghost size="small">
+                  {setUpLabel}
+                </NButton>
+              )
+            }}
+          </NPopconfirm>
+        </div>;
+      }
     },
     {
       key: 'index',
@@ -92,14 +107,7 @@ const {
           2: 'error'
         };
         const label = $t(userTypeRecord[row.type]);
-        if (row.type === 1) {
-          // const label = row.type? $t(userTypeRecord[row.type]) : '未知';
-          return <NTag type={tagMap[row.type]}>{label}</NTag>;
-        } else if (row.type === 2) {
-          return <NTag type={tagMap[row.type]}>{label}</NTag>;
-        } else {
-
-        }
+        return <NTag type={tagMap[row.type]}>{label}</NTag>;
       }
     },
     {
@@ -179,7 +187,8 @@ const {
   handleEdit,
   checkedRowKeys,
   onBatchDeleted,
-  onDeleted
+  onDeleted,
+  onSetUp
   // closeDrawer
 } = useTableOperate(data, getData);
 
@@ -195,6 +204,15 @@ async function handleDelete(id: number) {
   await batchDelUserByIds([id]).then(res=>{
     if (res.response.status===200) {
       onDeleted();
+    }
+  });
+}
+
+async function handleUserTypeChange(id: any, type: number) {
+  console.log("type", type)
+  await changeUserType(id, type).then(res=>{
+    if (res.response.status===200) {
+      onSetUp();
     }
   });
 }

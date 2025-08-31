@@ -96,6 +96,18 @@ export function batchDelUserByIds(id?: any[]) {
   })
 }
 
+export function changeUserType(id?: string, type?: number) {
+  return request({
+    method: 'POST',
+    url: '/v1/mg/uc/type/change',
+    data: {
+      id: id,
+      type: type
+    }
+  });
+
+}
+
 
 /** get menu list */
 export function fetchGetMenuList() {

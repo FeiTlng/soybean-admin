@@ -30,6 +30,11 @@ export const userTypeRecord: Record<Api.SystemManage.UserType,App.I18n.I18nKey> 
 };
 export const userTypeOptions =transformRecordToOption(userTypeRecord);
 
+export const userTypeSetUpBut: Record<Api.SystemManage.UserType, App.I18n.I18nKey> = {
+  2: 'page.manage.user.setUpNormal',
+  1: 'page.manage.user.setUpManage',
+};
+export const userTypeSetUpButOptions = transformRecordToOption(userTypeSetUpBut);
 
 
 export const menuTypeRecord: Record<Api.SystemManage.MenuType, App.I18n.I18nKey> = {

@@ -261,6 +261,11 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     await getData();
   }
 
+  async function onSetUp() {
+    window.$message?.success($t('common.setUpSuccess'));
+    await getData();
+  }
+
   return {
     drawerVisible,
     openDrawer,
@@ -271,7 +276,8 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     handleEdit,
     checkedRowKeys,
     onBatchDeleted,
-    onDeleted
+    onDeleted,
+    onSetUp
   };
 }
 

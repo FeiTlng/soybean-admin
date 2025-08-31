@@ -30,6 +30,8 @@ const local: App.I18n.Schema = {
     logout: '退出登录',
     logoutConfirm: '确认退出登录吗？',
     lookForward: '敬请期待',
+    setUpSuccess: '设置完成',
+    confirmModify: '确认修改吗？',
     modify: '修改',
     modifySuccess: '修改成功',
     noData: '无数据',
@@ -497,6 +499,8 @@ const local: App.I18n.Schema = {
         userPoints: '积分',
         registryTime: '注册时间',
         userType: '用户类型',
+        setUpManage: '设置运营人员',
+        setUpNormal: '设置普通用户',
         userRole: '用户角色',
         form: {
           userName: '请输入用户名',
