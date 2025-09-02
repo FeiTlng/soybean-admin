@@ -69,7 +69,7 @@ declare namespace Api {
 
     /** user search params */
     type UserSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'userPhone' | 'status'> &
+      Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'userPhone' | 'status' | 'type'> &
         CommonSearchParams
     >;
 
