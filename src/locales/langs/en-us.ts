@@ -476,6 +476,10 @@ const local: App.I18n.Schema = {
         roleCode: 'Role Code',
         roleStatus: 'Role Status',
         roleDesc: 'Role Description',
+        setUp: {
+          modalButton: 'Set up user',
+          modalTitle: 'Set up user role'
+        },
         menuAuth: 'Menu Auth',
         buttonAuth: 'Button Auth',
         form: {

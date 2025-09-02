@@ -105,7 +105,17 @@ export function changeUserType(id?: string, type?: number) {
       type: type
     }
   });
+}
 
+export function changeManageUserRole(roleId: string, param: any[]) {
+  return request({
+    method: 'POST',
+    url: '/v1/role/bind',
+    data: {
+      roleId: roleId,
+      uidS: param
+    }
+  });
 }
 
 

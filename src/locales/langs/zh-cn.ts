@@ -476,6 +476,10 @@ const local: App.I18n.Schema = {
         roleCode: '角色编码',
         roleStatus: '角色状态',
         roleDesc: '角色描述',
+        setUp: {
+          modalButton: '设置用户',
+          modalTitle: '设置角色用户'
+        },
         menuAuth: '菜单权限',
         buttonAuth: '按钮权限',
         form: {

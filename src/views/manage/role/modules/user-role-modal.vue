@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, shallowRef, watch } from 'vue';
-import { fetchGetAllPages, fetchGetMenuTree } from '@/service/api';
+import { computed, ref, shallowRef, watch } from 'vue';
+import { changeManageUserRole, fetchGetMenuTree, fetchGetUserList } from '@/service/api';
 import { $t } from '@/locales';
 
 defineOptions({
@@ -22,12 +22,12 @@ function closeModal() {
   visible.value = false;
 }
 
-const title = computed(() => $t('common.edit') + $t('page.manage.role.menuAuth'));
+const title = computed(() => $t('page.manage.role.setUp.modalTitle'));
 
 const home = shallowRef('');
 
 async function getHome() {
-  console.log(props.roleId);
+  console.log('getHome')
 
   home.value = 'home';
 }
@@ -38,24 +38,14 @@ async function updateHome(val: string) {
   home.value = val;
 }
 
-const pages = shallowRef<string[]>([]);
+const pages = computed(()=> shallowRef<Api.SystemManage.User[]>([])) ;
 
 async function getPages() {
-  const { error, data } = await fetchGetAllPages();
-
+  const { error, data } = await fetchGetUserList({type: 2, status: '0'});
   if (!error) {
-    pages.value = data;
+    pages.value.value = data?.data;
   }
 }
-
-const pageSelectOptions = computed(() => {
-  const opts: CommonType.Option[] = pages.value.map(page => ({
-    label: page,
-    value: page
-  }));
-
-  return opts;
-});
 
 const tree = shallowRef<Api.SystemManage.MenuTree[]>([]);
 
@@ -70,7 +60,7 @@ async function getTree() {
 const checks = shallowRef<number[]>([]);
 
 async function getChecks() {
-  console.log(props.roleId);
+  // console.log(props.roleId);
   // request
   checks.value = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 }
@@ -78,18 +68,29 @@ async function getChecks() {
 function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
-
-  window.$message?.success?.($t('common.modifySuccess'));
-
-  closeModal();
+  changeManageUserRole(props.roleId, checks.value).then(res=>{
+    if (res.response.status===200) {
+      window.$message?.success?.($t('common.modifySuccess'));
+      closeModal();
+    }
+  })
 }
 
 function init() {
   getHome();
   getPages();
-  getTree();
-  getChecks();
+  // getTree();
+  // getChecks();
 }
+
+const createOptions = computed(()=>{
+  return pages.value.value.map((v,i)=>{
+    return {
+      label: v.userName,
+      value: v.id
+    }
+  })
+})
 
 watch(visible, val => {
   if (val) {
@@ -99,21 +100,9 @@ watch(visible, val => {
 </script>
 
 <template>
-  <NModal v-model:show="visible" :title="title" preset="card" class="w-480px">
-    <div class="flex-y-center gap-16px pb-12px">
-      <div>{{ $t('page.manage.menu.home') }}</div>
-      <NSelect :value="home" :options="pageSelectOptions" size="small" class="w-160px" @update:value="updateHome" />
-    </div>
-    <NTree
-      v-model:checked-keys="checks"
-      :data="tree"
-      key-field="id"
-      checkable
-      expand-on-click
-      virtual-scroll
-      block-line
-      class="h-280px"
-    />
+  <NModal v-model:show="visible" :title="title" preset="card" class="w-70rem">
+    <NTransfer v-model:value="checks" :options="createOptions" source-filterable target-filterable
+               virtual-scroll ></NTransfer>
     <template #footer>
       <NSpace justify="end">
         <NButton size="small" class="mt-16px" @click="closeModal">

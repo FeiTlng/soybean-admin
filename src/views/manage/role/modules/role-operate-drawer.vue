@@ -136,7 +136,7 @@ watch(visible, () => {
         <MenuAuthModal v-model:visible="menuAuthVisible" :role-id="roleId" />
         <NButton @click="openButtonAuthModal">{{ $t('page.manage.role.buttonAuth') }}</NButton>
         <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="roleId" />
-        <NButton @click="openUserRoleModal">设置用户</NButton>
+        <NButton @click="openUserRoleModal">{{$t('page.manage.role.setUp.modalButton')}}</NButton>
         <UserRoleModal v-model:visible='userRoleVisible' :role-id="roleId" />
       </NSpace>
       <template #footer>

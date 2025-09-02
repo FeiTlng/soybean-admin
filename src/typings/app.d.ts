@@ -655,6 +655,10 @@ declare namespace App {
             roleCode: string;
             roleStatus: string;
             roleDesc: string;
+            setUp: {
+              modalButton: string;
+              modalTitle: string;
+            };
             form: {
               roleName: string;
               roleCode: string;

@@ -163,14 +163,14 @@ watch(visible, () => {
             <NRadio v-for="item in userStatusOptions" :key="item.value" :value="Number(item.value)" :label="$t(item.label)" />
           </NRadioGroup>
         </NFormItem>
-        <NFormItem v-if="model.type===2" :label="$t('page.manage.user.userRole')" path="roles">
+<!--        <NFormItem v-if="model.type===2" :label="$t('page.manage.user.userRole')" path="roles">
           <NSelect
             v-model:value="model.userRoles"
             multiple
             :options="roleOptions"
             :placeholder="$t('page.manage.user.form.userRole')"
           />
-        </NFormItem>
+        </NFormItem>-->
       </NForm>
       <template #footer>
         <NSpace :size="16">
