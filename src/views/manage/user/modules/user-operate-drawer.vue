@@ -113,7 +113,7 @@ async function handleSubmit() {
       userGender: model.value.userGender,
       status: model.value.status
     }).then(res=>{
-      if (res.response.status===200) {
+      if (res.response.data.code==='0') {
         window.$message?.success($t('common.updateSuccess'));
       }
     });
@@ -123,7 +123,7 @@ async function handleSubmit() {
       userPhone: model.value.userPhone,
       userGender: model.value.userGender
     } ).then(res=>{
-      if (res.response.status===200) {
+      if (res.response.data.code==='0') {
         window.$message?.success($t('common.addSuccess'));
       }
     });

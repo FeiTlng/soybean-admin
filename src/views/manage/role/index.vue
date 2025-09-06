@@ -109,7 +109,7 @@ const {
 async function handleBatchDelete() {
   // request
   await delRoleById(checkedRowKeys.value).then(res => {
-    if(res.response.status===200) {
+    if(res.response.data.code==='0') {
       onBatchDeleted();
     }
   })
@@ -117,7 +117,7 @@ async function handleBatchDelete() {
 
 async function handleDelete(id: number) {
   await delRoleById([id]).then(res=>{
-    if (res.response.status===200) {
+    if (res.response.data.code==='0') {
       onDeleted();
     }
   });

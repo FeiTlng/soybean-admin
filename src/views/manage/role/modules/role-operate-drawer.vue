@@ -87,15 +87,19 @@ async function handleSubmit() {
       id: props.rowData?.id,
       roleName: model.value.roleName,
       status: model.value.status
-    }).then(()=>{
-      window.$message?.success($t('common.updateSuccess'));
+    }).then(res=>{
+      if (res.response.data.code==='0') {
+        window.$message?.success($t('common.updateSuccess'));
+      }
     });
   } else if (props.operateType === 'add') {
     await addNewRole( {
       roleName: model.value.roleName,
       status: model.value.status
-    } ).then(()=>{
-      window.$message?.success($t('common.addSuccess'));
+    } ).then(res=>{
+      if(res.response.data.code==='0') {
+        window.$message?.success($t('common.addSuccess'));
+      }
     });
   } else {
     return;

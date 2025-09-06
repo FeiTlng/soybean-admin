@@ -193,7 +193,7 @@ const {
 
 async function handleBatchDelete() {
   await batchDelUserByIds(checkedRowKeys.value).then(res=>{
-    if (res.response.status===200) {
+    if (res.response.data.code==='0') {
       onBatchDeleted();
     }
   });
@@ -201,7 +201,7 @@ async function handleBatchDelete() {
 
 async function handleDelete(id: number) {
   await batchDelUserByIds([id]).then(res=>{
-    if (res.response.status===200) {
+    if (res.response.data.code==='0') {
       onDeleted();
     }
   });
@@ -209,7 +209,7 @@ async function handleDelete(id: number) {
 
 async function handleUserTypeChange(id: any, type: number) {
   await changeUserType(id, type).then(res=>{
-    if (res.response.status===200) {
+    if (res.response.data.code==='0') {
       onSetUp();
     }
   });

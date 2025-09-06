@@ -69,7 +69,7 @@ function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
   changeManageUserRole(props.roleId, checks.value).then(res=>{
-    if (res.response.status===200) {
+    if (res.response.data.code==='0') {
       window.$message?.success?.($t('common.modifySuccess'));
       closeModal();
     }
