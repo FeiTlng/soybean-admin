@@ -74,8 +74,8 @@ async function search() {
 <!--              <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />-->
 <!--            </NFormItemGi>-->
             <NFormItemGi span="24 s:12 m:6" label="用户类型" path="userType" class="pr-24px">
-              <NSelect v-model:value="model.type" :options="translateOptions(userTypeOptions)"
-                       placeholder="请选择用户类型" clearable />
+              <NSelect v-model:value="model.type" :options="translateOptions(userTypeOptions)" default-value="1"
+                       placeholder="请选择用户类型"/>
             </NFormItemGi>
             <NFormItemGi
               span="24 s:12 m:6"
