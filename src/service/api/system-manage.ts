@@ -107,6 +107,21 @@ export function changeUserType(id?: string, type?: number) {
   });
 }
 
+export function getAllManagerUser() {
+  return request<Api.SystemManage.User[]>({
+    method: 'GET',
+    url: '/v1/mg/uc/getAllManager',
+  });
+}
+
+export function getUserByRole(rid: string) {
+  return request<Api.SystemManage.User[]>({
+    method: 'GET',
+    url: '/v1/mg/uc/listByRole',
+    params: {rid: rid}
+  })
+}
+
 export function changeManageUserRole(roleId: string, param: any[]) {
   return request({
     method: 'POST',
