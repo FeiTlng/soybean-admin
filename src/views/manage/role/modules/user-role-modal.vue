@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, shallowRef, watch } from 'vue';
+import { computed, h, ref, shallowRef, watch } from 'vue';
 import {
   changeManageUserRole,
   fetchGetMenuTree,
@@ -7,6 +7,8 @@ import {
   getUserByRole
 } from '@/service/api';
 import { $t } from '@/locales';
+import { NAvatar, NTag, NText } from 'naive-ui';
+import type { SelectRenderTag } from 'naive-ui';
 
 defineOptions({
   name: 'UserRoleModal'
@@ -100,6 +102,70 @@ const selectOptions = computed(()=>{
   })
 })
 
+const renderLabel = function(option:any){
+  return h('div',{
+    style:{
+      display: 'flex',
+      alignItems: 'center'
+    }
+  },[
+    h(NAvatar,{
+      src: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg',
+      round: true,
+      size: 'small'
+    }),
+    h('div',{
+      style:{
+        marginLeft: '12px',
+        padding: '4px 0'
+      }
+    },[
+      h('div', null, [option.label as string]),
+      h(NText,{depth: 3,tag: 'div'},{default:()=>'description'})
+      ]),
+  ])
+}
+
+const renderMulSelectTag: SelectRenderTag = ({option,handleClose})=>{
+  return h(
+    NTag,
+    {
+      style: {
+        padding: '0 6px 0 4px'
+      },
+      round: true,
+      closable: true,
+      onClose: (e) => {
+        e.stopPropagation()
+        handleClose()
+      }
+    },
+    {
+      default: () =>
+        h(
+          'div',
+          {
+            style: {
+              display: 'flex',
+              alignItems: 'center'
+            }
+          },
+          [
+            h(NAvatar, {
+              src: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg',
+              round: true,
+              size: 22,
+              style: {
+                marginRight: '4px'
+              }
+            }),
+            option.label as string
+          ]
+        )
+    }
+  )
+}
+
 watch(visible, val => {
   if (val) {
     init();
@@ -109,7 +175,8 @@ watch(visible, val => {
 
 <template>
   <NModal v-model:show="visible" :title="title" preset="card" class="w-60rem h-20rem">
-    <NSelect v-model:value="checks" :options="selectOptions" multiple filterable clearable remote :clear-filter-after-select="false" />
+    <NSelect v-model:value="checks" :options="selectOptions" :render-label="renderLabel" :render-tag="renderMulSelectTag"
+             multiple filterable clearable :clear-filter-after-select="false" />
     <template #footer>
       <NSpace justify="end">
         <NButton size="small" class="mt-16px" @click="closeModal">
