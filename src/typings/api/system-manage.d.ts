@@ -150,5 +150,17 @@ declare namespace Api {
       pId: number;
       children?: MenuTree[];
     };
+
+    type PermissionInfo = {
+      id: string;
+      label: string;
+      code: number;
+    };
+
+    type RolePermissionInfo = {
+      rid: string;
+      rName: string;
+      permission: PermissionInfo[];
+    };
   }
 }

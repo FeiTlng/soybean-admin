@@ -157,3 +157,18 @@ export function fetchGetMenuTree() {
     method: 'get'
   });
 }
+
+export function getAllPermit() {
+  return request<Api.Common.PaginatingQueryRecord<Api.SystemManage.PermissionInfo>>({
+    url: '/v1/permission/list',
+    method: 'GET'
+  });
+}
+
+export function getPermitsByRole(rid: string) {
+  return request<Api.SystemManage.RolePermissionInfo>({
+    url: '/v1/permission/listByRole',
+    method: 'GET',
+    params: {rid: rid}
+  });
+}
