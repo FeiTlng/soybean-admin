@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import { $t } from '@/locales';
-import { getAllPermit, getPermitsByRole } from '@/service/api';
+import { changeRolePermission, getAllPermit, getPermitsByRole } from '@/service/api';
 import PermissionInfo = Api.SystemManage.PermissionInfo;
 
 defineOptions({
@@ -49,10 +49,12 @@ async function getChecks() {
 function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
-
-  window.$message?.success?.($t('common.modifySuccess'));
-
-  closeModal();
+  changeRolePermission(props.roleId, checks.value).then(res=>{
+    if (res.response.data.code==='0') {
+      window.$message?.success?.($t('common.modifySuccess'));
+      closeModal();
+    }
+  })
 }
 
 function init() {

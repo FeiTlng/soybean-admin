@@ -172,3 +172,14 @@ export function getPermitsByRole(rid: string) {
     params: {rid: rid}
   });
 }
+
+export function changeRolePermission(roleId: string, param: any[]) {
+  return request({
+    method: 'POST',
+    url: '/v1/permission/bind',
+    data: {
+      roleId: roleId,
+      pidS: param
+    }
+  });
+}

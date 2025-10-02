@@ -125,7 +125,7 @@ export const generatedRoutes: GeneratedRoute[] = [
               title: 'function_hide-child_one',
               i18nKey: 'route.function_hide-child_one',
               icon: 'material-symbols:filter-list-off',
-              hideInMenu: true,
+              hideInMenu: false,
               activeMenu: 'function_hide-child'
             }
           },

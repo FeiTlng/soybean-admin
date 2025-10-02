@@ -481,7 +481,7 @@ const local: App.I18n.Schema = {
           modalTitle: '设置角色用户'
         },
         menuAuth: '菜单权限',
-        buttonAuth: '按钮权限',
+        buttonAuth: '操作权限',
         form: {
           roleName: '请输入角色名称',
           roleCode: '请输入角色编码',

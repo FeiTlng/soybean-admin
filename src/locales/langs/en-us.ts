@@ -481,7 +481,7 @@ const local: App.I18n.Schema = {
           modalTitle: 'Set up user role'
         },
         menuAuth: 'Menu Auth',
-        buttonAuth: 'Button Auth',
+        buttonAuth: 'Operation Auth',
         form: {
           roleName: 'Please enter role name',
           roleCode: 'Please enter role code',
